@@ -1,0 +1,5 @@
+# comment line
+update     /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Michael Scott']/Salary 	 45000
+# another comment line
+update /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Pam Beesly']/Name Pam Halpert
+update /Company/Branches/Branch[City='Scranton']/Employees/Employee[@ID='3']/@manager 1

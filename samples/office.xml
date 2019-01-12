@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Company>
+  <Name>Dunder Mifflin Paper Company, Inc.</Name>
+  <Branches>
+    <Branch>
+      <!-- Currently filming -->
+      <City>Scranton</City>
+      <Employees>
+        <Employee ID="1">
+          <Name>Michael Scott</Name>
+          <Salary>42000</Salary>
+        </Employee>
+        <Employee ID="2" manager="1">
+          <Name>Dwight Schrute</Name>
+          <Salary>31000</Salary>
+        </Employee>
+        <Employee ID="3" manager="2">
+          <Name>Jim Halpert</Name>
+          <Salary>38000</Salary>
+        </Employee>
+        <Employee ID="4" manager="1">
+          <Name>Pam Beesly</Name>
+          <Salary>32000</Salary>
+        </Employee>
+      </Employees>
+    </Branch>
+  </Branches>
+</Company>
