@@ -14,7 +14,6 @@ class UpdateCommand(lineRemainder: String) : XPathAndValue {
   }
 
   override fun xslt() = when (getXPathInfo(this.xpath).resultType.underlyingItemType.uType) {
-    UType.ELEMENT -> """<xsl:template match="${this.xpath}/text()">${this.value}</xsl:template>"""
     UType.ATTRIBUTE -> """
           <xsl:template match="${this.xpath}">
             <xsl:attribute name="{name()}">
@@ -22,6 +21,6 @@ class UpdateCommand(lineRemainder: String) : XPathAndValue {
             </xsl:attribute>
           </xsl:template>
       """.trimIndent()
-    else -> this.xpath
+    else -> """<xsl:template match="${this.xpath}/text()">${this.value}</xsl:template>"""
   }
 }

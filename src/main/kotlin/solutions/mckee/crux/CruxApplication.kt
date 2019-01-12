@@ -21,6 +21,7 @@ fun main(args: Array<String>) {
   }
   val xsltScript = createXsltScript(scriptInfo)
   val xmlInput = getInputStream(app)
+  println(xsltScript)
   executeScript(xmlInput, xsltScript)
 }
 
