@@ -5,13 +5,19 @@ import javax.xml.xpath.XPathExpression
 import javax.xml.xpath.XPathExpressionException
 import javax.xml.xpath.XPathFactory
 
-interface XPathAndValue : CruxCommand {
+abstract class XPathAndValue(lineRemainder: String) : CruxCommand {
   val xpath: String
   val value: String
 
+  init {
+    val (xpath, value) = this.parseLineParams(lineRemainder)
+    this.xpath = xpath
+    this.value = value
+  }
+
   data class XPathAndValueParams(val xpath: String, val value: String)
 
-  fun parseLineParams(lineRemainder: String): XPathAndValueParams {
+  private fun parseLineParams(lineRemainder: String): XPathAndValueParams {
     val (xpath, ixAfterXPath) = parseXPath(lineRemainder)
     return XPathAndValueParams(xpath, lineRemainder.substring(ixAfterXPath).trim())
   }

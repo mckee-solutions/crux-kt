@@ -1,6 +1,11 @@
-# comment line
+# Best boss deserves a raise
 update     /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Michael Scott']/Salary 	 45000
-# another comment line
+
+# Pam and Jim got married (test adding nodes)
 update /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Pam Beesly']/Name <First>Pam</First><Last>Halpert</Last>
+
+# Fixing an error
 update /Company/Branches/Branch[City='Scranton']/Employees/Employee[@ID='3']/@manager 1
+
+# David was fired
 delete /Company/Branches/Branch[City='Scranton']/Employees/Employee[@ID='5']

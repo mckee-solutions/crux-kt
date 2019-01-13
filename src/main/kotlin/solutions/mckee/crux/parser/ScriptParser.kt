@@ -18,8 +18,8 @@ fun parseScript(inputStream: InputStream): ScriptInfo {
   inputStream.buffered().reader().use { reader ->
     reader.forEachLine { line ->
       currentLine++
-      if (line[0] == '#') {
-        // line is a comment, loop
+      if (line.isBlank() || line[0] == '#') {
+        // line is a comment or blank, loop
         return@forEachLine
       }
       try {
