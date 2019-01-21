@@ -10,6 +10,13 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
 
+/**
+ * Main method for the CRUX application.
+ *
+ * CRUX is a command-line application that takes an XML document as a stream
+ * and outputs a new XML document with changes specified in a crux script.
+ *
+ */
 fun main(args: Array<String>) {
   val app = CommandLine.populateCommand(CruxApplication(), *args)
   handleHelpRequested(app)
@@ -21,10 +28,13 @@ fun main(args: Array<String>) {
   }
   val xsltScript = createXsltScript(scriptInfo)
   val xmlInput = getInputStream(app)
-  println(xsltScript)
   executeScript(xmlInput, xsltScript)
 }
 
+/**
+ * This class defines the command-line parameters and options that can be
+ * used to run the application.
+ */
 class CruxApplication {
 
   @Option(names = ["-f", "--file"], paramLabel = "SCRIPT_FILE", description = ["CRUX script file"])
@@ -44,14 +54,31 @@ class CruxApplication {
   var inputFile: File? = null
 
   val script: InputStream
-  get() = when {
+    get() = when {
       scriptFile != null -> scriptFile!!.inputStream()
       scriptString != null -> scriptString!!.byteInputStream()
       else -> InputStream.nullInputStream()
-  }
+    }
 
 }
 
+/**
+ * Check to see if the user requested help instead of trying to run the application/scripts
+ *
+ * @param app The application instance to check
+ */
+fun handleHelpRequested(app: CruxApplication) {
+  if (app.usageHelpRequested) {
+    CommandLine.usage(app, System.err)
+    System.exit(0)
+  }
+}
+
+/**
+ * Ensure a crux script was provided to the program
+ *
+ * @param app The application instance to check
+ */
 fun assertScriptProvided(app: CruxApplication) {
   if (app.scriptFile == null && app.scriptString == null) {
     System.err.println("Either one of -f or -s must be specified.")
@@ -64,13 +91,14 @@ fun assertScriptProvided(app: CruxApplication) {
   }
 }
 
-fun handleHelpRequested(app: CruxApplication) {
-  if (app.usageHelpRequested) {
-    CommandLine.usage(app, System.err)
-    System.exit(0)
-  }
-}
-
+/**
+ * Retrieve the input XML to the application. This can come as either
+ * standard input to the application or passed as a file parameter.
+ *
+ * @param app The application instance to read from
+ * @return the input stream of the file if one was provided, or the input
+ * stream as read from standard input.
+ */
 fun getInputStream(app: CruxApplication): InputStream = when {
   app.inputFile != null -> FileInputStream(app.inputFile)
   else -> System.`in`

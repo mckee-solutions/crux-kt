@@ -1,9 +1,10 @@
 package solutions.mckee.crux.commands
 
 import net.sf.saxon.type.UType
+import solutions.mckee.crux.exceptions.ParseException
 import solutions.mckee.crux.parser.getXPathInfo
 
-class UpdateCommand(lineRemainder: String) : XPathAndValue(lineRemainder) {
+class ReplaceCommand(lineRemainder: String) : XPathAndValue(lineRemainder) {
   override fun xslt() = when (getXPathInfo(this.xpath).resultType) {
     UType.ATTRIBUTE -> """
           <xsl:template match="${this.xpath}">
@@ -12,6 +13,7 @@ class UpdateCommand(lineRemainder: String) : XPathAndValue(lineRemainder) {
             </xsl:attribute>
           </xsl:template>
       """.trimIndent()
-    else -> """<xsl:template match="${this.xpath}/text()">${this.value}</xsl:template>"""
+    UType.ELEMENT -> """<xsl:template match="${this.xpath}">${this.value}</xsl:template>"""
+    else -> throw ParseException("Unsupported location XPath for replace command: ${this.xpath}")
   }
 }

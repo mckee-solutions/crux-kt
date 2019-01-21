@@ -2,7 +2,7 @@ package solutions.mckee.crux.parser
 
 import solutions.mckee.crux.commands.CruxCommand
 import solutions.mckee.crux.commands.DeleteCommand
-import solutions.mckee.crux.commands.UpdateCommand
+import solutions.mckee.crux.commands.ReplaceCommand
 import solutions.mckee.crux.exceptions.ParseException
 import java.io.InputStream
 
@@ -27,7 +27,7 @@ fun parseScript(inputStream: InputStream): ScriptInfo {
         val lineRemainder = line.substring(ixAfterCommand).trim()
         parsingInfo.commands.add(
           when (commandType) {
-            "update" -> UpdateCommand(lineRemainder)
+            "replace" -> ReplaceCommand(lineRemainder)
             "delete" -> DeleteCommand(lineRemainder)
             else -> throw ParseException("Invalid command: \"$commandType\"")
           }
