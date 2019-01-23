@@ -1,11 +1,14 @@
-# Best boss deserves a raise
-update     /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Michael Scott']/Salary 	 45000
+# Best boss deserves a raise (update)
+replace     /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Michael Scott']/Salary 	 <Salary>45000</Salary>
 
-# Pam and Jim got married (test adding nodes)
-update /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Pam Beesly']/Name <First>Pam</First><Last>Halpert</Last>
+# Pam and Jim got married (update with children)
+replace /Company/Branches/Branch[City='Scranton']/Employees/Employee[Name='Pam Beesly']/Name <Name><First>Pam</First><Last>Halpert</Last></Name>
 
-# Fixing an error
-update /Company/Branches/Branch[City='Scranton']/Employees/Employee[@ID='3']/@manager 1
+# Fixing an error (update attribute value)
+replace /Company/Branches/Branch[City='Scranton']/Employees/Employee[@ID='3']/@manager 1
 
-# David was fired
+# David was fired (delete)
 delete /Company/Branches/Branch[City='Scranton']/Employees/Employee[@ID='5']
+
+# Andy moved to Scranton
+append /Company/Branches/Branch[City='Scranton']/Employees <Employee ID='6'><Name>Andy Bernard</Name><Salary>38000</Salary></Employee>

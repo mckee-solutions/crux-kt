@@ -5,7 +5,7 @@ import solutions.mckee.crux.exceptions.ParseException
 import solutions.mckee.crux.parser.getXPathInfo
 import solutions.mckee.crux.utils.contains
 
-class AppendCommand(lineRemainder: String) : XPathAndValue(lineRemainder) {
+class PrependCommand(lineRemainder: String) : XPathAndValue(lineRemainder) {
 
   override fun xslt() = when (getXPathInfo(this.xpath).resultType) {
     UType.ELEMENT -> when (this.value) {
@@ -14,27 +14,23 @@ class AppendCommand(lineRemainder: String) : XPathAndValue(lineRemainder) {
         val splitVal = this.value.split("""=""".toRegex(), 1)
         val attrName = splitVal[0].substring(1)
         val attrValue = splitVal[1]
-        // language=XSLT
         """
-          <xsl:template match="${this.xpath}">
-            <xsl:apply-templates select="@*"/>
+            <xsl:template match="${this.xpath}">
             <xsl:attribute name="$attrName">
               <xsl:text>$attrValue</xsl:text>
             </xsl:attribute>
-            <xsl:apply-templates select="node()"/>
+            <xsl:apply-templates/>
           </xsl:template>
           """.trimIndent()
       }
-      else ->
-        // language=XSLT
-        """
+      else -> """
           <xsl:template match="${this.xpath}">
-            <xsl:apply-templates/>
             ${this.value}
+            <xsl:apply-templates/>
           </xsl:template>
           """.trimIndent()
     }
-    else -> throw ParseException("Unsupported location XPath for 'prepend' command: ${this.xpath}")
+    else -> throw ParseException("Unsupported location XPath for 'append' command: ${this.xpath}")
   }
 
 }
